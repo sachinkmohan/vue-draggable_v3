@@ -1,6 +1,9 @@
 <template>
     <div style="width:100%;height:3000px;">
        <input type="checkbox" v-model="responsive"/> Responsive 
+       <br>
+       <input type="text" id="widget" v-model="name">
+       <button v-on:click="addWidgetItem">Add Widget Item</button>
         <div style="width:100%;margin-top: 10px;height:100%;">
             <grid-layout :layout.sync="layout"
                         :col-num="12"
@@ -61,7 +64,8 @@ export default {
             draggable: true,
             resizable: true,
             responsive: false,
-            index: 0
+            index: 0,
+            name: ""
         }
     },
     methods: {
@@ -72,6 +76,9 @@ export default {
             }
             console.log("Responsive value", this.responsive);
             return result;
+        },
+        addWidgetItem() {
+            this.layout.push({"x":0,"y":0,"w":2,"h":2,"i":this.name, static:false})
         }
     }
 }

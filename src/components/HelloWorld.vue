@@ -2,14 +2,23 @@
     <div style="width:100%;height:3000px;">
        <input type="checkbox" v-model="responsive"/> Responsive 
        <br>
-       <input type="text" id="widget" v-model="name">
-       <button v-on:click="addWidgetItem">Add Widget Item</button>
+       <input type="text" id="widget" v-model="nameOneCrossOne">
+       <button v-on:click="addWidgetItemOneCrossOne">Add Widget Item 1 x 1</button>
+       <br>
+       <input type="text" id="widget" v-model="nameTwoCrossTwo">
+       <button v-on:click="addWidgetItemTwoCrossTwo">Add Widget Item 2 x 2</button>
+       <br>
+       <input type="text" id="widget" v-model.number="nameRandomX" placeholder="x">
+       <input type="text" id="widget" v-model.number="nameRandomY" placeholder="y">
+       <input type="text" id="widget" v-model.number="nameRandomW" placeholder="w">
+       <input type="text" id="widget" v-model.number="nameRandomH" placeholder="h">
+       <input type="text" id="widget" v-model.number="nameRandom" placeholder="enter text">
+       <button v-on:click="addRandomWidget">Add Random</button>
         <div style="width:100%;margin-top: 10px;height:100%;">
             <grid-layout :layout.sync="layout"
-                        :col-num="12"
+                        :col-num="4"
                         :row-height="30"
                         :is-draggable="draggable"
-                        :is-resizable="resizable"
                         :responsive="responsive"
                         :vertical-compact="true"
                         :use-css-transforms="true"
@@ -40,32 +49,38 @@ export default {
     data() {
         return {
             layout: [
-                {"x":0,"y":0,"w":2,"h":2,"i":"0", static: false},
-                {"x":2,"y":0,"w":2,"h":4,"i":"1", static: true},
-                {"x":4,"y":0,"w":2,"h":5,"i":"2", static: false},
-                {"x":6,"y":0,"w":2,"h":3,"i":"3", static: false},
-                {"x":8,"y":0,"w":2,"h":3,"i":"4", static: false},
-                {"x":10,"y":0,"w":2,"h":3,"i":"5", static: false},
-                {"x":0,"y":5,"w":2,"h":5,"i":"6", static: false},
-                {"x":2,"y":5,"w":2,"h":5,"i":"7", static: false},
-                {"x":4,"y":5,"w":2,"h":5,"i":"8", static: false},
-                {"x":6,"y":3,"w":2,"h":4,"i":"9", static: true},
-                {"x":8,"y":4,"w":2,"h":4,"i":"10", static: false},
-                {"x":10,"y":4,"w":2,"h":4,"i":"11", static: false},
-                {"x":0,"y":10,"w":2,"h":5,"i":"12", static: false},
-                {"x":2,"y":10,"w":2,"h":5,"i":"13", static: false},
-                {"x":4,"y":8,"w":2,"h":4,"i":"14", static: false},
-                {"x":6,"y":8,"w":2,"h":4,"i":"15", static: false},
-                {"x":8,"y":10,"w":2,"h":5,"i":"16", static: false},
-                {"x":10,"y":4,"w":2,"h":2,"i":"17", static: false},
-                {"x":0,"y":9,"w":2,"h":3,"i":"18", static: false},
-                {"x":2,"y":6,"w":2,"h":2,"i":"19", static: false}
+                // {"x":0,"y":0,"w":2,"h":2,"i":"0", static: false},
+                // {"x":2,"y":0,"w":2,"h":2,"i":"1", static: false},
+                // {"x":0,"y":0,"w":1,"h":1,"i":"2", static: false},
+                // {"x":6,"y":0,"w":2,"h":3,"i":"3", static: false},
+                // {"x":8,"y":0,"w":2,"h":3,"i":"4", static: false},
+                // {"x":10,"y":0,"w":2,"h":3,"i":"5", static: false},
+                // {"x":0,"y":0,"w":2,"h":5,"i":"6", static: false},
+                // {"x":2,"y":5,"w":2,"h":5,"i":"7", static: false},
+                // {"x":4,"y":5,"w":2,"h":5,"i":"8", static: false},
+                // {"x":6,"y":3,"w":2,"h":4,"i":"9", static: true},
+                // {"x":8,"y":4,"w":2,"h":4,"i":"10", static: false},
+                // {"x":10,"y":4,"w":2,"h":4,"i":"11", static: false},
+                // {"x":0,"y":10,"w":2,"h":5,"i":"12", static: false},
+                // {"x":2,"y":10,"w":2,"h":5,"i":"13", static: false},
+                // {"x":4,"y":8,"w":2,"h":4,"i":"14", static: false},
+                // {"x":6,"y":8,"w":2,"h":4,"i":"15", static: false},
+                // {"x":8,"y":10,"w":2,"h":5,"i":"16", static: false},
+                // {"x":10,"y":0,"w":2,"h":2,"i":"17", static: false},
+                // {"x":0,"y":9,"w":2,"h":3,"i":"18", static: false},
+                // {"x":2,"y":6,"w":2,"h":2,"i":"19", static: false}
             ],
             draggable: true,
-            resizable: true,
             responsive: false,
             index: 0,
-            name: ""
+            nameOneCrossOne: "",
+            nameTwoCrossTwo: "",
+            nameRandomX: 0,
+            nameRandomY: 0,
+            nameRandomW: 0,
+            nameRandomH: 0,
+            nameRandom: "",
+
         }
     },
     methods: {
@@ -77,8 +92,41 @@ export default {
             console.log("Responsive value", this.responsive);
             return result;
         },
-        addWidgetItem() {
-            this.layout.push({"x":0,"y":0,"w":2,"h":2,"i":this.name, static:false})
+        addWidgetItemOneCrossOne() {
+            if(this.layout.length === 0) {
+               this.layout.push({"x":0,"y":0,"w":1,"h":1,"i":this.nameOneCrossOne, static:false}) 
+               console.log("After",JSON.stringify(this.layout));
+            }
+            else {
+               let l = this.layout.at(-1); 
+               console.log("Before",JSON.stringify(l.x));
+            }
+            // let l = this.layout.at(-1);
+            // console.log("Before",JSON.stringify(l.x));
+            // if(l.x != 2){
+            // this.layout.push({"x":l.x+2,"y":0,"w":1,"h":1,"i":this.name, static:false})
+            //     // l.x = l.x +2;
+            // }
+            // else {
+
+            // this.layout.push({"x":0,"y":0,"w":1,"h":1,"i":this.name, static:false})
+            // }
+            // console.log("After",JSON.stringify(l.x));
+            // console.log("After",JSON.stringify(l));
+
+        },
+        addWidgetItemTwoCrossTwo() {
+            if(this.layout.length === 0) {
+               this.layout.push({"x":0,"y":0,"w":2,"h":2,"i":this.nameTwoCrossTwo, static:false}) 
+               console.log("After",JSON.stringify(this.layout));
+            }
+            else {
+               this.layout.push({"x":1,"y":0,"w":2,"h":2,"i":this.nameTwoCrossTwo, static:false}) 
+               console.log("TwoCrossTwo",JSON.stringify(this.layout));
+            }
+        },
+        addRandomWidget(){
+            this.layout.push({"x":this.nameRandomX,"y":this.nameRandomY,"w":this.nameRandomW,"h":this.nameRandomH,"i":this.nameRandom, static:false}) 
         }
     }
 }
